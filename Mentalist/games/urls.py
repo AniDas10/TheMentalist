@@ -7,5 +7,6 @@ urlpatterns = [
     path('logout', views.logoutUser, name="logout"),
     path('signup', views.signupUser, name="signup"),
     path('home', views.home, name="home"),
-    path('game', views.game, name="game"),
+    path('flappy', views.flappy, name="flappy"),
+    path('api/save-score/<int:score>', views.SaveScore.as_view(), name="savescore"),
 ]

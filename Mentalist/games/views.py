@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils.html import escape
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+
+from django.utils.html import escape
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
+from rest_framework import generics, status
+
 
 
 def index(request):
@@ -51,5 +57,12 @@ def home(request):
     return HttpResponse("your dashboard")
 
 @login_required
-def game(request):
-    return render(request, 'spaceshooter.html')
+def flappy(request):
+    return render(request, 'flappy.html')
+
+class SaveScore(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, *args, **kwargs):
+        print(kwargs['score'])
+        return HttpResponse("success")
