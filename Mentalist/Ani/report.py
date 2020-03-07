@@ -18,109 +18,109 @@ def game_score_analysis(scores):
     return growth_rate
 
 pool = {
+    "intro":{
+        1: [
+            "What is your age?",
+            "What is your gender?",
+            "How are you feeling today?",
+            "Have u ever consulted a psychcologist before?"],
+        2: [
+            "What do you feel like doing?",
+            "Do you feel like you need to depend on substances?",
+            "Are you under a lot of pressure?", 
+            "How long can you work for at a time?",
+            "Do you have any motivation to do work?"]
+
+    },
     "depression" : {
-        3: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ],
-        4: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ],
-        5: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ]
+        3: [
+            "In the past two weeks, how often have you felt, down, depressed, or hopeless?",
+            "Have you had any thoughts of suicide?",
+            "How is your sleep?",
+            "How is your energy?",
+            "Do you prefer to stay at home rather than going out and doing new things?"
+        ],
+        4: [
+            "Little interest or pleasure in doing things?",
+            "Feeling down, depressed, or hopeless?",
+            "Trouble falling or staying asleep, or sleeping too much?",
+            "Feeling tired or having little energy",
+            "Poor appetite or overeating?"
+        ],
+        5: [
+            "How much of a change have u seen in yourself after our sessions?",
+            "Feeling bad about yourself -- or feel that your a failure or have let yourself of your family down?",
+            "Trouble concentrating or things such as reading the newspaper or watching television?",
+            "Moving or speaking so slowly that other people could have noticed? Or the opposite -- being so fidgety or restless that you have been moving around a lot more than usual",
+            "Thoughts that you would be better off dead of of hurting yourself in some way or the other"
+        ]
     },
     "addiction" : {
-        3: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
+        3: ["Have you used drugs other than those required for medical reasons?",
+            "Do you abuse more than one drug at a time?",
+            "Are you unable to stop using drugs when you want to?",
+            "Have you ever had blackouts or flashback as a result of drug use?",
+            "Do you ever feel bad or guilty about your involvement with drugs?"
             ],
-        4: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
+        4: ["How much in control are you of yourself after the last session?"
+            "Have you neglected your family because of your use of drugs?",
+            "Have you ever experienced withdrawal symptoms when you stopped taking drugs?",
+            "Have you had medical problems as a result of your drug use <eg. memory loss, hepatitis, convulsions, bleeding?",
+            "Have you engaged in illegal activities in order to obtain drugs?"
             ],
-        5: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ]
-    },
-    "phobia" : {
-        3: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ],
-        4: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ],
-        5: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ],
-        
+        5: [
+            "How much of a change have u seen in yourself after our sessions?",
+            "Feeling bad about yourself -- or feel that your a failure or have let yourself of your family down?",
+            "Trouble concentrating or things such as reading the newspaper or watching television?",
+            "Moving or speaking so slowly that other people could have noticed? Or the opposite -- being so fidgety or restless that you have been moving around a lot more than usual",
+            "Thoughts that you would be better off dead of of hurting yourself in some way or the other"
+        ]
     },
     "anxiety" : {
-        3: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ],
-        4: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ],
-        5: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
-            ]
+        3: [
+            "Do you experience excessive worry?",
+            "Is your worry excessive in intensity, frequency, or amount of distress it causes?",
+            "Do you find it difficult ot control the worry < or stop worrying > once it starts?",
+            "Do you worry excessively or uncontrollably about minor things such as being late for an appointment, minor repairs, homework, etc.?",
+            "Do you ever feel the need to take sleeping pills?"
+        ],
+        4: [
+            "I’ve had trouble on the job because of my temper",
+            "People tell me that I become too angry, too quickly",
+            "After arguing with someone, I often hate myself for losing my temper",
+            "I find it very hard to forgive someone who has done me wrong.",
+            "I hate lines, and I especially hate waiting in lines"
+        ],
+        5: [
+            "In the past two weeks, how often have you felt, down, depressed, or hopeless?",
+            "Have you had any thoughts of suicide?",
+            "How is your sleep?",
+            "How is your energy?",
+            "Do you prefer to stay at home rather than going out and doing new things?"
+        ]
     },
     "burnout" : {
-        3: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
+        3: ["I’ve had trouble on the job because of my temper",
+            "People tell me that I become too angry, too quickly",
+            "After arguing with someone, I often hate myself for losing my temper",
+            "I find it very hard to forgive someone who has done me wrong.",
+            "I hate lines, and I especially hate waiting in lines"
             ],
-        4: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
+        4: ["Do you feel any change in you after the last session",
+            "At times I have gotten so angry that I have slammed doors, thrown things, broken items or punched walls",
+            "I am apt to take frustration so badly, I cannot get it out of my mind.",
+            "I still get angry when I think of the bad things people did to me in the past",
+            "I often make critical, judgmental comments to others, even if they do not ask me for advice or help"
             ],
-        5: ["Question 1",
-            "Question 2",
-            "Question 3",
-            "Question 4",
-            "Question 5"
+        5: ["After the last session, how often do u nend up in arguments?",
+            "When riled, I often blurt out things I later regret saying",
+            "People I’ve trusted have often let me down, leaving me feeling angry or betrayed",
+            "I use abusive language, such as name-calling, insults, sarcasm or swearing",
+            "I’m an angry person. My temper has already caused lots of problems, and I need help changing it"
             ]
     }
 }
-# depression, burnout, anxiety, phobia, addiction
+# depression, burnout, anxiety, addiction
 
 def generate_set(keyword, session):
     filter1 = pool[keyword]
