@@ -23,11 +23,11 @@ pool = {
             "What is your age?",
             "What is your gender?",
             "How are you feeling today?",
-            "Have u ever consulted a psychcologist before?"],
+            "Have u ever consulted a psychologist before?"],
         2: [
             "What do you feel like doing?",
             "Do you feel like you need to depend on substances?",
-            "Are you under a lot of pressure?", 
+            "Are you under a lot of pressure?",
             "How long can you work for at a time?",
             "Do you have any motivation to do work?"]
 
@@ -122,10 +122,15 @@ pool = {
 }
 # depression, burnout, anxiety, addiction
 
-def generate_set(keyword, session):
+def get_session_question_count(keyword, session):
     filter1 = pool[keyword]
     question_set = filter1[session]
-    return question_set
+    return len(question_set)
+
+def get_next_question(keyword, session, count):
+    filter1 = pool[keyword]
+    question_set = filter1[session]
+    return question_set[count]
 
 def analysis_per_session(answers):
     """

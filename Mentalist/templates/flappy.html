@@ -1,52 +1,58 @@
+{% extends 'base.html' %}
+
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Flappy Plane</title>
-    <link rel="shortcut icon" href="{% static 'Flappy/TemplateData/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'Flappy/TemplateData/style.css' %}">
-    <script src="{% static 'Flappy/TemplateData/UnityProgress.js' %}"></script>
-    <script src="{% static 'Flappy/Build/UnityLoader.js' %}"></script>
-    <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "{% static 'Flappy/Build/Build3.json' %}", {onProgress: UnityProgress});
-    </script>
-  </head>
-  <body>
-    <div class="webgl-content">
-      <div id="unityContainer" style="width: 960px; height: 600px"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-        <div class="title">Flappy Plane</div>
-      </div>
-    </div>
-    <script type="text/javascript">
-      function getCookie(name) {
-          var cookieValue = null;
-          if (document.cookie && document.cookie !== '') {
-              var cookies = document.cookie.split(';');
-              for (var i = 0; i < cookies.length; i++) {
-                  var cookie = cookies[i].trim();
-                  // Does this cookie string begin with the name we want?
-                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                      break;
-                  }
+{% block title %}Flappy Plane{% endblock %}
+
+{% block extratop %}
+<link rel="shortcut icon" href="{% static 'Flappy/TemplateData/favicon.ico' %}">
+<link rel="stylesheet" href="{% static 'Flappy/TemplateData/style.css' %}">
+<script src="{% static 'Flappy/TemplateData/UnityProgress.js' %}"></script>
+<script src="{% static 'Flappy/Build/UnityLoader.js' %}"></script>
+<script>
+  var unityInstance = UnityLoader.instantiate("unityContainer", "{% static 'Flappy/Build/Build3.json' %}", {onProgress: UnityProgress});
+</script>
+{% endblock %}
+
+{% block body %}
+
+<div class="webgl-content">
+  <div id="unityContainer" style="width: 960px; height: 600px"></div>
+  <div class="footer">
+    <div class="webgl-logo"></div>
+    <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+    <div class="title">Flappy Plane</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
               }
           }
-          return cookieValue;
       }
-      function callbackend(score) {
-        fetch('http://localhost:8000/api/save-score/'+score, {
-          method: 'get',
-          headers: {
-            'X-CSRFToken': getCookie('csrftoken'),
-          },
-        })
-      }
-    </script>
-  </body>
-</html>
+      return cookieValue;
+  }
+  function callbackend(score) {
+    fetch(window.location.href.split('/').slice(0,3).join('/')+'/api/save-score/'+score, {
+      method: 'get',
+      headers: {
+        'X-CSRFToken': getCookie('csrftoken'),
+      },
+    }).then(function(response){
+      window.location.href = window.location.href.split('/').slice(0,3).join('/')+'/chat';
+    });
+  }
+
+</script>
+{% endblock %}

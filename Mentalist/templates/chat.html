@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+<h1>Chat</h1>
+{% for game in games %}
+    <p class="question">{{game.question}}</p>
+    <p class="answer">{{game.answer}}</p>
+{% endfor %}
+{% if new_question %}
+<form method="POST">
+    {% csrf_token %}
+    <p class="question" id="new_question">{{new_question}}</p>
+    <input type="hidden" name="gid" value="{{gid}}">
+    <input type="text" name="answer"><br>
+    <button type="submit">Submit</button>
+</form>
+{% else %}
+<p>No New Questions to answer</p>
+{% endif %}
+
+{% endblock %}
+
+

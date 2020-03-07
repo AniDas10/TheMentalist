@@ -8,5 +8,6 @@ urlpatterns = [
     path('signup', views.signupUser, name="signup"),
     path('home', views.home, name="home"),
     path('flappy', views.flappy, name="flappy"),
+    path('chat', views.chat, name="chat"),
     path('api/save-score/<int:score>', views.SaveScore.as_view(), name="savescore"),
 ]
