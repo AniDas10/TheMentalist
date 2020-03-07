@@ -1,0 +1,102 @@
+Questions for Depression:
+    SET 1
+
+    Q. In the past two weeks, how often have you felt, down, depressed, or hopeless?
+    --> Options: Not at all, several days, more than half the days, nearly everyday
+
+    Q. Have you had any thoughts of suicide?
+    --> Options: Never, some thoughts of death, some thoughts of suicide, or some attempt at suicide 
+    
+    Q. How is your sleep?
+    --> Options: Sleeping as usual, slight difficulty, sleep reduced by at least two hours, or getting less than three hours of sleep
+
+    Q. How is your energy?
+    --> Options: As much energy as every, the higher your Less energy than before, not enough to do much, or not enough to do anything
+
+    Q. Do you prefer to stay at home rather than going out and doing new things?
+    --> Options: Yes or No
+
+    SET 2
+
+    Q. Little interest or pleasure in doing things 
+    
+    Q. Feeling down, depressed, or hopeless
+    
+    Q. Trouble falling or staying asleep, or sleeping too much
+    
+    Q. Feeling tired or having little energy 
+    
+    Q. Poor appetite or overeating
+    
+    Q. Feeling bad about yourself -- or feel that your a failure or have let yourself of your family down
+    
+    Q. Trouble concentrating or things such as reading the newspaper or watching television
+    
+    Q. Moving or speaking so slowly that other people could have noticed? Or the opposite -- being so fidgety or restless that you have been moving around a lot more than usual 
+    
+    Q. Thoughts that you would be better off dead of of hurting yourself in some way or the other
+
+    --> Options: Not at all, several days, more than half the days, nearly every day 
+
+
+Questions for Anxiety Disorder < GAD - Generalized Anxiety Disorder >
+    Q. Do you experience excessive worry?
+    
+    Q. Is your worry excessive in intensity, frequency, or amount of distress it causes?
+    
+    Q. Do you find it difficult ot control the worry < or stop worrying > once it starts?
+    
+    Q. Do you worry excessively or uncontrollably about minor things such as being late for an appointment, minor repairs, homework, etc.?
+
+
+Questions for Anger Management 
+    Q. I’ve had trouble on the job because of my temper.
+    
+    Q. People tell me that I become too angry, too quickly.
+    
+    Q. After arguing with someone, I often hate myself for losing my temper.
+    
+    Q. I find it very hard to forgive someone who has done me wrong.
+    
+    Q. I hate lines, and I especially hate waiting in lines.
+    
+    Q. When I get angry, frustrated or hurt, I comfort myself by eating or using alcohol or other drugs.
+    
+    Q. At times I have gotten so angry that I have slammed doors, thrown things, broken items or punched walls.
+    
+    Q. I am apt to take frustration so badly, I cannot get it out of my mind.
+    
+    Q. I still get angry when I think of the bad things people did to me in the past.
+    
+    Q. I often make critical, judgmental comments to others, even if they do not ask me for advice or help.
+    
+    Q. After arguing with someone, I hate myself.
+    
+    Q. When riled, I often blurt out things I later regret saying.
+    
+    Q. People I’ve trusted have often let me down, leaving me feeling angry or betrayed.
+    
+    Q. I use abusive language, such as name-calling, insults, sarcasm or swearing.
+    
+    Q. I’m an angry person. My temper has already caused lots of problems, and I need help changing it.
+
+Questions for Phobias:
+
+Questions for Addictions:
+    Q. Have you used drugs other than those required for medical reasons?
+
+    Q. Do you abuse more than one drug at a time?
+
+    Q. Are you unable to stop using drugs when you want to?
+
+    Q. Have you ever had blackouts or flashback as a result of drug use?
+
+    Q. Do you ever feel bad or guilty about your involvement with drugs?
+
+    Q. Have you neglected your family because of your use of drugs?
+
+    Q. Have you engaged in illegal activities in order to obtain drugs?
+
+    Q. Have you ever experienced withdrawal symptoms when you stopped taking drugs?
+
+    Q. Have you had medical problems as a result of your drug use <eg. memory loss, hepatitis, convulsions, bleeding?>
