@@ -32,3 +32,10 @@ class MindJournalEntry(models.Model):
     question4 = models.TextField()
     question5 = models.TextField()
     question6 = models.TextField()
+
+class Doctor(models.Model):
+    name = models.CharField(max_length=32)
+    phone = models.CharField(max_length=15)
+    location = models.TextField()
+    experience = models.TextField()
+    fee = models.TextField()

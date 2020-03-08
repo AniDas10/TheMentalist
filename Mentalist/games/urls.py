@@ -11,5 +11,7 @@ urlpatterns = [
     path('write', views.write, name="write"),
     path('mind', views.mind, name="mind"),
     path('game', views.game, name="game"),
+    path('chatbot', views.chatbot, name="chatbot"),
     path('api/save-score/<int:score>', views.SaveScore.as_view(), name="savescore"),
+    path('api/record', views.Record.as_view(), name="record"),
 ]

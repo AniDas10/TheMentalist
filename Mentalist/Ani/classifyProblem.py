@@ -15,7 +15,7 @@ def classify(scores):
         for s in scores:
             total += s
         total = total/5
-        if total < 12.5:
+        if total < 2.5:
             return "burnout"
         else:
             return "depression"

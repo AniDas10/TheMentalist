@@ -49,18 +49,33 @@
 </style>
 
 <!-- feature_part start-->
-<section class="feature_part">
+<section class="feature_part" style="padding-bottom: 100px;">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-8">
                 <div class="section_tittle text-center">
-                    <h1>Session {{session.count}}</h1>
+                    <h1 class="pb-3">Session {{session.count}}</h1>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-between align-items-center">
+        <div class="row justify-content-between">
             <div class="{% if not meta.disorder %}offset-lg-3{% endif %} col-lg-6 col-sm-12 pt-2 mt-2 pb-2" id="chatbox">
-                <h2>Your Questions</h2>
+                {% if final %}
+                    {% if final.0 == 2 %}
+                        <h2 class="pt-2 pb-1 text-center" style="color: #aa0000">
+                            You should really consult a psychiatrist!
+                        </h2>
+                    {% elif final.0 == 1 %}
+                        <h2 class="pt-2 pb-1 text-center" style="color: orange">
+                            You may need to visit a psychiatrist!
+                        </h2>
+                    {% else %}
+                        <h2 class="pt-2 pb-1 text-center" style="color: #00aa00">
+                            You seem to  be mentally healthy!
+                        </h2>
+                    {% endif %}
+                {% else %}
+                <h2 class="pt-2 pb-1 text-center">Your Questions</h2>
                 {% for game in games %}
                 <div class="question container">
                     <b>Question</b>
@@ -72,6 +87,12 @@
                     <p>{{game.answer}}</p>
                     <span class="time">{{game.answered_time|date:"j M"}} {{game.answered_time|time:"h:i A"}}</span>
                 </div>
+                {% empty %}
+                {% if session.count > 1 %}
+                <p class="text-center">Session {{session.count|add:"-1"}} is over, click <a href="{% url 'logout' %}">here</a> to logout</p>
+                {% else %}
+                <p class="text-center">Welcome to the site! Try playing the <a href="{% url 'game' %}">game</a></p>
+                {% endif %}
                 {% endfor %}
                 {% if last_game %}
                 <form method="POST">
@@ -104,13 +125,35 @@
                 {% else %}
                 <p class="text-center">No New Questions to answer at the moment<br>Click <a href="{% url 'game' %}">here</a> to go to the game</p>
                 {% endif %}
+                {% endif %}
             </div>
 
             {% if meta.disorder %}
-            <div class="col-lg-6 col-sm-12 pt-2 mt-2 pb-2 pl-2 text-center">
+            <div class="col-lg-6 col-sm-12 pt-2 mt-2 pb-2 pl-4 text-center">
                 <h2>We have detected that you might have {{meta.disorder}}</h2>
+                <p>Here's your progress dealing with it</p>
+                <div id='sessionchart' style='width:100%'>
+                </div>
+                <div id='gamechart' style='width:100%'>
+                </div>
             </div>
             {% endif %}
+            <div class="col-lg-12 col-xs-12 pt-5 text-center">
+                <h2>Psychiatrists nearby</h2>
+                <div class="row pt-3">
+                    {% for doc in doctors %}
+                        <div class="card col-xs-6 col-lg-3">
+                            <div class="card-body">
+                                <div class="card-title">{{doc.name}}</div>
+                                <p>{{doc.location}}</p>
+                                <p>{{doc.phone}}</p>
+                                <p>{{doc.experience}}</p>
+                                <p>{{doc.fee}}/visit</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -119,5 +162,126 @@
 
 
     {% include 'footer.html' %}
+
+{% endblock %}
+
+{% block extrajs %}
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"> </script>
+<script type='text/javascript'>
+function makeChart(query, xlabels, ydata, bottom_text) {
+    var options = {
+        chart: {
+            height: 350,
+            type: 'line',
+        },
+        colors:['#fd7e14'],
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    position: 'top', // top, center, bottom
+                },
+            }
+        },
+        dataLabels: {
+            enabled: true,
+        },
+        series: [{
+            name: 'Score',
+            data: ydata,
+        }],
+        xaxis: {
+            position: 'top',
+            labels: {
+                show: true,
+                offsetY: -18,
+                formatter: function (val) {
+                    labels = xlabels
+                    return labels[val-1];
+                },
+                style: {
+                    colors: [],
+                    fontSize: '12px',
+                    fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontWeight: 400,
+                    cssClass: 'apexcharts-xaxis-label',
+                },
+            },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            },
+            crosshairs: {
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        colorFrom: '#FD7E14',
+                        colorTo: ' #6610f2;',
+                        stops: [0, 100],
+                        opacityFrom: 0.7,
+                        opacityTo: 1,
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                offsetY: -35,
+
+            }
+        },
+        fill: {
+            gradient: {
+                shade: 'light',
+                type: "horizontal",
+                shadeIntensity: 0.25,
+                gradientToColors: undefined,
+                inverseColors: true,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [50, 0, 100, 100]
+            },
+        },
+        yaxis: {
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: true,
+            },
+            max: 100,
+            labels: {
+                show: false,
+                formatter: function (val) {
+                    return val;
+                }
+            }
+
+        },
+        title: {
+            text: bottom_text,
+            floating: true,
+            offsetY: 330,
+            align: 'center',
+            style: {
+                color: '#444'
+            }
+        },
+    }
+
+    var chart = new ApexCharts(
+        document.querySelector(query),
+        options
+    );
+
+    chart.render();
+}
+
+makeChart("#sessionchart", [3,4,5], {{result_percentages}}, 'Your progress over the sessions');
+
+makeChart("#gamechart", {{growth_sessions}}, {{growth_rates}}, 'Improvement in your stress over the sessions');
+
+</script>
 
 {% endblock %}

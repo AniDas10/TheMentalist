@@ -10,7 +10,7 @@ from django.utils.html import escape
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from rest_framework import generics, status
-from Ani import report, classifyProblem, get_emotion
+from Ani import report, classifyProblem, get_emotion, Jarvis, get_doctors
 from .models import *
 import datetime
 
@@ -60,6 +60,18 @@ def logoutUser(request):
 def profile(request):
     user = request.user
     meta = UserMetaData.objects.get(user=user)
+    final = None
+    loc = "VileParle"
+    doctors = Doctor.objects.filter(location=loc)
+    if not len(doctors):
+        docs = get_doctors.get_doctors(loc)
+        for doc in docs:
+            Doctor.objects.create(name=doc['Name'], phone=doc['Phone'], location=loc, experience=doc['Experience'], fee=doc['Consultation_fee'])
+        doctors = Doctor.objects.filter(location=loc)
+
+    if len(doctors) > 8:
+        doctors = doctors[:8]
+
     if request.method == 'POST':
         ans = request.POST['answer']
         game = Game.objects.get(id=request.POST['gid'])
@@ -90,11 +102,24 @@ def profile(request):
                 meta.current_session = new_session
             meta.save()
     games = Game.objects.filter(session=meta.current_session).exclude(answer__isnull=True)
+    result_percentages = [float(v) for v in Session.objects.filter(user=user, count__gte=3).values_list('result_percent', flat=True) if v]
+    growth_sessions = []
+    growth_rates = []
+    for session in Session.objects.filter(user=user):
+        sesh_games = Game.objects.filter(session=session)
+        if sesh_games.count():
+            growth_sessions.append(session.count)
+            growth_rates.append(report.game_score_analysis(list(sesh_games.values_list('score', flat=True))))
+    while len(result_percentages) < 3:
+        result_percentages.append(0.0)
+    if meta.current_session.count == 6:
+        final = report.overall_analysis(Session.objects.filter(user=user).exclude(result_percent__isnull=True).values_list('result_percent', flat=True))
+        print(final)
     try:
         last_game = Game.objects.filter(session=meta.current_session, answer=None).first()
-        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session})
+        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors, 'final': final})
     except Exception:
-        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session})
+        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors, 'final': final})
 
 @login_required
 def flappy(request):
@@ -125,6 +150,10 @@ def mind(request):
 def game(request):
     return render(request, 'Frontend/game.html')
 
+@login_required
+def chatbot(request):
+    return render(request, 'Frontend/chatbot.html')
+
 
 class SaveScore(generics.GenericAPIView):
     permission_classes = (IsAuthenticated, )
@@ -145,3 +174,11 @@ class SaveScore(generics.GenericAPIView):
         q_no += 1
 
         return JsonResponse({"success": True})
+
+
+class Record(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request):
+        query, response = Jarvis.myCommand()
+        return JsonResponse({'query': query, 'response': response})
