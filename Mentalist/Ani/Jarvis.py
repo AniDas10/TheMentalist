@@ -8,13 +8,14 @@ import datetime
 import wolframalpha     #API for executing 90% queries
 import os 
 import sys
+import random
 
 #pyttsx3 is the speak engine used by windows
-engine = pyttsx3.init('sapi5')
+#engine = pyttsx3.init('sapi5')
 client = wolframalpha.Client('2EXX7V-25AG74LU5P')
 
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
+#voices = engine.getProperty('voices')
+#engine.setProperty('voice', voices[0].id)
 
 def speak(audio):
     print('Jarvis :: '+ audio)
@@ -32,10 +33,10 @@ def greetMe():
     if currentH >= 18 and currentH < 24:
         speak('Good Evening')
     
-greetMe()
-speak('Hello Ani, Jarvis here')
+#greetMe()
+#speak('Hello Ani, Jarvis here')
 #speak('Sad to hear about Tony')
-speak('How may i help you?')
+#speak('How may i help you?')
 
 def myCommand():
     r = sr.Recognizer()
@@ -56,31 +57,42 @@ def myCommand():
 
     return query
 
+"""
 while True:
     query = myCommand()
     query = query.lower()
-
-    if 'open youtube' in query:
-        speak('Opening Youtube in a second !')
-        webbrowser.open('www.youtube.com')
-    elif 'open google' in query:
-        speak('Opening Google in a second !')
-        webbrowser.open('www.google.com')
-    elif 'open monkey accounts' in query:
-        speak('Opening Monkey Accounts Application in a second !')
-        webbrowser.open('www.monke.herokuapp.com')
+    response_1 = [
+    	"Maybe you wanna talk about it?",
+    	"Talking about it always helps",
+    	"Don't worry, stay positive",
+    	"calm down, everything would turn out to be fine in the end"]
+    response_2 = [
+    	"I am always there for you",
+    	"See, i told you",
+    	"Glad to help you out",
+    	"You can always pay me a visit",
+    	"I will always be your friend"]
+    
+    if 'low' in query or 'down' in query or 'sad' in query or 'suicide' in query or 'depressed' in query:
+        speak(random.choice(response_1))
+        speak(random.choice(response_1))
+    elif 'better' in query or 'feel better' in query:
+        speak(random.choice(response_2))
+        speak(random.choice(response_2))
     
     elif 'what\'s up' in query or 'how are you' in query or 'what are you doing' in query:
         stMsgs = ['Chillin with ma homies', 'Nothing much, just bored', 'Netflix and chill bro']
         speak(random.choice(stMsgs))
 
-    elif 'bye-bye' in query or 'abort' in query or 'good night' in query or 'stop' in query:
-        speak("Sure Bye Bye")
-        speak("Hope you have a good day")
+    elif 'appreciate' in query or 'thank you' in query or 'thanks' in query or 'good night' in query or 'stop' in query:
+        speak("I hope i was of some help")
+        speak("Enjoy. Stay Positive")
         sys.exit()
     
     elif 'hello' in query:
         speak("Yo what\'s up bro ?")
+    elif 'girl' in query:
+        speak("Yo my bad, what\'s up sis ?")
 
     else:
         query = query
@@ -90,7 +102,10 @@ while True:
                 res = client.query(query)
                 results = next(res.results).text
                 #speak("Larvis says :: Umm ?")
-                speak("Got it bro")
+                speak("I couldn't understand your problem")
+                speak("However, i've scraped the internet just for you")
+                speak("Hope you find something relevant")
+                
                 speak(results)
             except:
                 results = wikipedia.summary(query, sentences=2)
@@ -98,7 +113,74 @@ while True:
                 #speak('Tony thinks what u r looking for is')
                 speak(results)
         except:
-            speak("Sorry bro, google it for yourself")
+            speak("Sorry bro, i am not an expert")
+            speak("But there are surely some experts out there")
+            speak("Lemme guide you to google, search for one maybe?")
             webbrowser.open('www.google.com')
 
     speak("Anything else ? :")
+"""
+
+def response(reply):
+    res = []
+    query = reply
+    query = query.lower()
+    response_1 = [
+    	"Maybe you wanna talk about it?",
+    	"Talking about it always helps",
+    	"Don't worry, stay positive",
+    	"calm down, everything would turn out to be fine in the end"]
+    response_2 = [
+    	"I am always there for you",
+    	"See, i told you",
+    	"Glad to help you out",
+    	"You can always pay me a visit",
+    	"I will always be your friend"]
+    
+    if 'low' in query or 'down' in query or 'sad' in query or 'suicide' in query or 'depressed' in query:
+        res.append(random.choice(response_1))
+        res.append(random.choice(response_1))
+    elif 'better' in query or 'feel better' in query:
+        res.append(random.choice(response_2))
+        res.append(random.choice(response_2))
+    
+    elif 'what\'s up' in query or 'how are you' in query or 'what are you doing' in query:
+        stMsgs = ['Chillin with ma homies', 'Nothing much, just bored', 'Netflix and chill bro']
+        res.append(random.choice(stMsgs))
+
+    elif 'appreciate' in query or 'thank you' in query or 'thanks' in query or 'good night' in query or 'stop' in query:
+        res.append("I hope i was of some help")
+        res.append("Enjoy. Stay Positive")
+        
+    
+    elif 'hello' in query:
+        res.append("Yo what\'s up bro ?")
+    elif 'girl' in query:
+        res.append("Yo my bad, what\'s up sis ?")
+
+    else:
+        query = query
+        res.append("Searching ...")
+        try:
+            try:
+                reso = client.query(query)
+                results = next(reso.results).text
+                #speak("Larvis says :: Umm ?")
+                res.append("I couldn't understand your problem")
+                res.append("However, i've scraped the internet just for you")
+                res.append("Hope you find something relevant")
+                
+                res.append(results)
+            except:
+                results = wikipedia.summary(query, sentences=2)
+                res.append('Got it bro')
+                #speak('Tony thinks what u r looking for is')
+                res.append(results)
+        except:
+            res.append("Sorry bro, i am not an expert")
+            res.append("But there are surely some experts out there")
+            
+    res.append("Anything else ? :")
+    return res
+
+#print(response("I am feeling better"))
