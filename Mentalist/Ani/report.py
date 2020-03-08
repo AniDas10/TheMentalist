@@ -134,6 +134,9 @@ def get_next_question(keyword, session, count):
 
 def analysis_per_session(answers):
     """
+    [decision, percent rating]
+
+    Decisions:
     2 = Still needs sessions
     1 = Improved after previous session
     0 = Significant improvement
@@ -151,6 +154,11 @@ def analysis_per_session(answers):
 
 def overall_analysis(session_scores):
     """
+    Expects a list of all session scores
+
+    [decision, percent rating]
+
+    Decision:
     2 = Patient needs consultation
     1 = Patient might still face some issue (conduct expert survey)
     0 = Patient is healthy
