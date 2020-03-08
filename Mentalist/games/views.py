@@ -134,6 +134,10 @@ def mind(request):
 def game(request):
     return render(request, 'Frontend/game.html')
 
+@login_required
+def chatbot(request):
+    return render(request, 'Frontend/chatbot.html')
+
 
 class SaveScore(generics.GenericAPIView):
     permission_classes = (IsAuthenticated, )

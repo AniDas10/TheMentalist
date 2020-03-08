@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Chatbot {% endblock %}
+{% block body %}
+{% include 'navbar.html' %}
+
+    <!-- breadcrumb start-->
+    <section class="breadcrumb_part breadcrumb_bg" style="margin-bottom: 2rem; margin-top: 6rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <div class="breadcrumb_iner_item">
+                            <h2 style="font-size: 4rem;">Chatbot</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb start-->
+
+
+    <!--================Blog Area =================-->
+    <section class="blog_area section_padding" style="padding-top: 2rem !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-5 mb-lg-0">
+                    <button class="btn btn-primary" type="submit">Record</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'footer.html' %}
+
+{% endblock %}
