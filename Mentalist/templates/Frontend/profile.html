@@ -73,7 +73,11 @@
                     <span class="time">{{game.answered_time|date:"j M"}} {{game.answered_time|time:"h:i A"}}</span>
                 </div>
                 {% empty %}
+                {% if session.count > 1 %}
                 <p class="text-center">Session {{session.count|add:"-1"}} is over, click <a href="{% url 'logout' %}">here</a> to logout</p>
+                {% else %}
+                <p class="text-center">Welcome to the site! Try playing the <a href="{% url 'game' %}">game</a></p>
+                {% endif %}
                 {% endfor %}
                 {% if last_game %}
                 <form method="POST">

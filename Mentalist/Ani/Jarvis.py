@@ -96,8 +96,8 @@ def response(q):
                 else:
                     res.append(random.choice(response_1))
         except:
-            res.append("Sorry I am not an expert")
-            res.append("But there are surely some experts you can consult out there")
+            res.append("Sorry I couldn't interpret that")
+            res.append("You should contact some of our experts to help you with your problem")
 
     # res.append("Could I be of any further assistance ?")
     return res
