@@ -49,13 +49,14 @@ def myCommand():
         #with some specified duration, by default it records till no more audio input is there
     try:                            #if query is successful then print user query
         query = r.recognize_google(audio, language='en-in')
-        print("User :: " + query + '\n')
+        response = response(query)
 
     except sr.UnknownValueError:
-        speak('Sorry, I didn\'t get you! Do you mind typing it down?')
-        query = str(input("Type it here :: "))
+        speak('Sorry, I didn\'t get you! Do you mind repeating?')
+        query = None
+        response = 'Sorry, I didn\'t get you! Do you mind repeating?'
 
-    return query
+    return query, response
 
 """
 while True:
@@ -121,9 +122,9 @@ while True:
     speak("Anything else ? :")
 """
 
-def response(reply):
+def response(q):
     res = []
-    query = reply
+    query = q
     query = query.lower()
     response_1 = [
     	"Maybe you wanna talk about it?",
@@ -178,7 +179,7 @@ def response(reply):
             res.append("Sorry I am not an expert")
             res.append("But there are surely some experts you can consult out there")
 
-    res.append("Could I be of any further assistance ? :")
+    res.append("Could I be of any further assistance ?")
     return res
 
 #print(response("I am feeling better"))

@@ -10,7 +10,7 @@ from django.utils.html import escape
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from rest_framework import generics, status
-from Ani import report, classifyProblem, get_emotion
+from Ani import report, classifyProblem, get_emotion, Jarvis
 from .models import *
 import datetime
 
@@ -95,8 +95,9 @@ def profile(request):
     growth_rates = []
     for session in Session.objects.filter(user=user):
         sesh_games = Game.objects.filter(session=session)
-        growth_sessions.append(session.count)
-        growth_rates.append(report.game_score_analysis(list(sesh_games.values_list('score', flat=True))))
+        if sesh_games.count():
+            growth_sessions.append(session.count)
+            growth_rates.append(report.game_score_analysis(list(sesh_games.values_list('score', flat=True))))
     while len(result_percentages) < 3:
         result_percentages.append(0.0)
     try:
@@ -158,3 +159,11 @@ class SaveScore(generics.GenericAPIView):
         q_no += 1
 
         return JsonResponse({"success": True})
+
+
+class Record(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request):
+        query, response = Jarvis.myCommand()
+        return JsonResponse({'query': query, 'response': response})
