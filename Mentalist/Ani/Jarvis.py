@@ -11,11 +11,11 @@ import sys
 import random
 
 #pyttsx3 is the speak engine used by windows
-#engine = pyttsx3.init('sapi5')
+engine = pyttsx3.init('sapi5')
 client = wolframalpha.Client('2EXX7V-25AG74LU5P')
 
-#voices = engine.getProperty('voices')
-#engine.setProperty('voice', voices[0].id)
+# voices = engine.getProperty('voices')
+# engine.setProperty('voice', voices[0].id)
 
 def speak(audio):
     print('Jarvis :: '+ audio)
@@ -38,6 +38,66 @@ def greetMe():
 #speak('Sad to hear about Tony')
 #speak('How may i help you?')
 
+def response(q):
+    res = []
+    query = q
+    query = query.lower()
+    response_1 = [
+    	"Maybe you wanna talk about it?",
+    	"Talking about it always helps",
+    	"Things are never as bad as they seem",
+    	"calm down, everything would turn out to be fine in the end"]
+    response_2 = [
+    	"I am glad we could be of assistance",
+    	"That's why we do what we do",
+    	"Glad to help you out",
+    	"You can always pay us a visit",
+    	"We've got your back"]
+
+    if 'low' in query or 'down' in query or 'sad' in query or 'suicide' in query or 'depressed' in query:
+        res.append(random.choice(response_1))
+        res.append(random.choice(response_1))
+    elif 'better' in query or 'feel better' in query:
+        res.append(random.choice(response_2))
+        res.append(random.choice(response_2))
+
+    elif 'what\'s up' in query or 'how are you' in query or 'what are you doing' in query:
+        stMsgs = ['Just assisting people however I can', 'Crunching some data about your game progress', 'Planning future sessions']
+        res.append(random.choice(stMsgs))
+
+    elif 'appreciate' in query or 'thank you' in query or 'thanks' in query or 'good night' in query or 'stop' in query:
+        res.append("I hope i was of some help")
+        res.append("Have a great day")
+
+
+    elif 'hello' in query:
+        res.append("Hey! Glad to see you here")
+
+    else:
+        query = query
+        res.append("Searching ...")
+        try:
+            try:
+                reso = client.query(query)
+                results = next(reso.results).text
+                #speak("Larvis says :: Umm ?")
+                res.append("I couldn't understand your problem")
+                res.append("However, i've scraped the internet just for you")
+                res.append("Hope you find something relevant")
+
+                res.append(results)
+            except:
+                results = wikipedia.summary(query, sentences=2)
+                res.append('This might be what you needed')
+                #speak('Tony thinks what u r looking for is')
+                res.append(results)
+        except:
+            res.append("Sorry I am not an expert")
+            res.append("But there are surely some experts you can consult out there")
+
+    res.append("Could I be of any further assistance ?")
+    return res
+
 def myCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:     #Microphone is now active
@@ -49,14 +109,14 @@ def myCommand():
         #with some specified duration, by default it records till no more audio input is there
     try:                            #if query is successful then print user query
         query = r.recognize_google(audio, language='en-in')
-        response = response(query)
+        res = response(query)
 
     except sr.UnknownValueError:
         speak('Sorry, I didn\'t get you! Do you mind repeating?')
         query = None
-        response = 'Sorry, I didn\'t get you! Do you mind repeating?'
+        res = 'Sorry, I didn\'t get you! Do you mind repeating?'
 
-    return query, response
+    return query, res
 
 """
 while True:
@@ -121,65 +181,5 @@ while True:
 
     speak("Anything else ? :")
 """
-
-def response(q):
-    res = []
-    query = q
-    query = query.lower()
-    response_1 = [
-    	"Maybe you wanna talk about it?",
-    	"Talking about it always helps",
-    	"Things are never as bad as they seem",
-    	"calm down, everything would turn out to be fine in the end"]
-    response_2 = [
-    	"I am glad we could be of assistance",
-    	"That's why we do what we do",
-    	"Glad to help you out",
-    	"You can always pay us a visit",
-    	"We've got your back"]
-
-    if 'low' in query or 'down' in query or 'sad' in query or 'suicide' in query or 'depressed' in query:
-        res.append(random.choice(response_1))
-        res.append(random.choice(response_1))
-    elif 'better' in query or 'feel better' in query:
-        res.append(random.choice(response_2))
-        res.append(random.choice(response_2))
-
-    elif 'what\'s up' in query or 'how are you' in query or 'what are you doing' in query:
-        stMsgs = ['Just assisting people however I can', 'Crunching some data about your game progress', 'Planning future sessions']
-        res.append(random.choice(stMsgs))
-
-    elif 'appreciate' in query or 'thank you' in query or 'thanks' in query or 'good night' in query or 'stop' in query:
-        res.append("I hope i was of some help")
-        res.append("Have a great day")
-
-
-    elif 'hello' in query:
-        res.append("Hey! Glad to see you here")
-
-    else:
-        query = query
-        res.append("Searching ...")
-        try:
-            try:
-                reso = client.query(query)
-                results = next(reso.results).text
-                #speak("Larvis says :: Umm ?")
-                res.append("I couldn't understand your problem")
-                res.append("However, i've scraped the internet just for you")
-                res.append("Hope you find something relevant")
-
-                res.append(results)
-            except:
-                results = wikipedia.summary(query, sentences=2)
-                res.append('This might be what you needed')
-                #speak('Tony thinks what u r looking for is')
-                res.append(results)
-        except:
-            res.append("Sorry I am not an expert")
-            res.append("But there are surely some experts you can consult out there")
-
-    res.append("Could I be of any further assistance ?")
-    return res
 
 #print(response("I am feeling better"))
