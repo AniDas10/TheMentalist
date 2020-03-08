@@ -43,8 +43,8 @@ def response(q):
     query = q
     query = query.lower()
     response_1 = [
-    	"Maybe you wanna talk about it?",
-    	"Talking about it always helps",
+    	"You might want to contact someone to talk about it",
+    	"There are always people who could be helpful",
     	"Things are never as bad as they seem",
     	"calm down, everything would turn out to be fine in the end"]
     response_2 = [
@@ -54,11 +54,9 @@ def response(q):
     	"You can always pay us a visit",
     	"We've got your back"]
 
-    if 'low' in query or 'down' in query or 'sad' in query or 'suicide' in query or 'depressed' in query:
-        res.append(random.choice(response_1))
+    if 'low' in query or 'down' in query or 'sad' in query or 'suicide' in query or 'depressed' in query or 'bad' in query:
         res.append(random.choice(response_1))
     elif 'better' in query or 'feel better' in query:
-        res.append(random.choice(response_2))
         res.append(random.choice(response_2))
 
     elif 'what\'s up' in query or 'how are you' in query or 'what are you doing' in query:
@@ -95,7 +93,7 @@ def response(q):
             res.append("Sorry I am not an expert")
             res.append("But there are surely some experts you can consult out there")
 
-    res.append("Could I be of any further assistance ?")
+    # res.append("Could I be of any further assistance ?")
     return res
 
 def myCommand():
