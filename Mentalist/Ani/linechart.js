@@ -21,15 +21,15 @@
         },
         series: [{
             name: 'Score',
-            data: {{graph_data}},
+            data: {{result_percentage}},
         }],
         xaxis: {
             position: 'top',
             labels: {
                 offsetY: -18,
                 formatter: function (val) {
-                    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                    return months[val-1];
+                    questions = [1, 2, 3, 4, 5];
+                    return questions[val-1];
                 }
             },
             axisBorder: {

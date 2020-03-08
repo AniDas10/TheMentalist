@@ -4,6 +4,8 @@ def game_score_analysis(scores):
     # Stage 1 : Normalizing the data
     a = min(scores)
     b = max(scores)
+    if b == a:
+        return 0
     score = [(x-a)/(b-a) for x in scores]
 
     # Stage 2 : Trend analysis

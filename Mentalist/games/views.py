@@ -90,11 +90,20 @@ def profile(request):
                 meta.current_session = new_session
             meta.save()
     games = Game.objects.filter(session=meta.current_session).exclude(answer__isnull=True)
+    result_percentages = [float(v) for v in Session.objects.filter(user=user, count__gte=3).values_list('result_percent', flat=True) if v]
+    growth_sessions = []
+    growth_rates = []
+    for session in Session.objects.filter(user=user):
+        sesh_games = Game.objects.filter(session=session)
+        growth_sessions.append(session.count)
+        growth_rates.append(report.game_score_analysis(list(sesh_games.values_list('score', flat=True))))
+    while len(result_percentages) < 3:
+        result_percentages.append(0.0)
     try:
         last_game = Game.objects.filter(session=meta.current_session, answer=None).first()
-        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session})
+        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates})
     except Exception:
-        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session})
+        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates})
 
 @login_required
 def flappy(request):
