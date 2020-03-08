@@ -78,7 +78,7 @@ pool = {
             "Thoughts that you would be better off dead of of hurting yourself in some way or the other"
         ]
     },
-    "anxiety" : {
+    "stress" : {
         3: [
             "Do you experience excessive worry?",
             "Is your worry excessive in intensity, frequency, or amount of distress it causes?",

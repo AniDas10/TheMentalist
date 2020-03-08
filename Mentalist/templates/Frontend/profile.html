@@ -60,6 +60,21 @@
         </div>
         <div class="row justify-content-between">
             <div class="{% if not meta.disorder %}offset-lg-3{% endif %} col-lg-6 col-sm-12 pt-2 mt-2 pb-2" id="chatbox">
+                {% if final %}
+                    {% if final.0 == 2 %}
+                        <h2 class="pt-2 pb-1 text-center" style="color: #aa0000">
+                            You should really consult a psychiatrist!
+                        </h2>
+                    {% elif final.0 == 1 %}
+                        <h2 class="pt-2 pb-1 text-center" style="color: orange">
+                            You may need to visit a psychiatrist!
+                        </h2>
+                    {% else %}
+                        <h2 class="pt-2 pb-1 text-center" style="color: #00aa00">
+                            You seem to  be mentally healthy!
+                        </h2>
+                    {% endif %}
+                {% else %}
                 <h2 class="pt-2 pb-1 text-center">Your Questions</h2>
                 {% for game in games %}
                 <div class="question container">
@@ -109,6 +124,7 @@
                 </form>
                 {% else %}
                 <p class="text-center">No New Questions to answer at the moment<br>Click <a href="{% url 'game' %}">here</a> to go to the game</p>
+                {% endif %}
                 {% endif %}
             </div>
 

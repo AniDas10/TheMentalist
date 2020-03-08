@@ -60,6 +60,7 @@ def logoutUser(request):
 def profile(request):
     user = request.user
     meta = UserMetaData.objects.get(user=user)
+    final = None
     loc = "VileParle"
     doctors = Doctor.objects.filter(location=loc)
     if not len(doctors):
@@ -111,11 +112,14 @@ def profile(request):
             growth_rates.append(report.game_score_analysis(list(sesh_games.values_list('score', flat=True))))
     while len(result_percentages) < 3:
         result_percentages.append(0.0)
+    if meta.current_session.count == 6:
+        final = report.overall_analysis(Session.objects.filter(user=user).exclude(result_percent__isnull=True).values_list('result_percent', flat=True))
+        print(final)
     try:
         last_game = Game.objects.filter(session=meta.current_session, answer=None).first()
-        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors})
+        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors, 'final': final})
     except Exception:
-        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors})
+        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors, 'final': final})
 
 @login_required
 def flappy(request):
