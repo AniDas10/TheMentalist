@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Write {% endblock %}
+{% block body %}
+{% include 'navbar.html' %}
+
+  <!-- breadcrumb start-->
+  <section class="breadcrumb_part breadcrumb_bg" style="margin-top: 6rem;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="breadcrumb_iner">
+            <div class="breadcrumb_iner_item">
+              <h2 style="font-size: 3rem;">Write your Mind</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb start-->
+  <section class="regervation_part section_padding">
+    <div class="container">
+        <div class="row align-items-center regervation_content">
+            <div class="col-lg-12">
+                <div class="regervation_part_iner">
+                    <form method="POST" action="{% url 'write' %}">
+                      {% csrf_token %}
+                        <h2 style="font-size: 3rem;">Make an Entry in your Mind Journal</h2>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" id="Textarea" rows="8" name="question1"
+                                    placeholder="What is the situation? This can mean an event, topic or your general feelings. "></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-12">
+                              <textarea class="form-control" id="Textarea" rows="8" name="question2"
+                                  placeholder="What are you thinking about the situation?"></textarea>
+                          </div>
+                      </div>
+                      <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" id="Textarea" rows="8" name="question3"
+                                    placeholder="What are the consequences of your thinking?"></textarea>
+                            </div>
+                        </div>
+                        <h2 style="font-size: 1.2rem; margin: 10px;">Does your thinking contain any distortions?</h2>
+                        <div class="form-row">
+                          <div class="form-group col-md-12">
+                              <select class="form-control" id="Select" name="question4">
+                                  <option value="Overgeneralizing" selected>Overgeneralizing - Thinking in terms of things being always or never.</option>
+                                  <option value="Filtering">Filtering - Selectively ignoring positive information that contradicts your negative views</option>
+                                  <option value="All or Nothing Thinking">All or Nothing Thinking - Thinking in terms of black and white, or good or bad only. Your thinking allows for no middle ground</option>
+                                  <option value="Personalizing">Personalizing - Thinking that something happened because it was specifically you vs it being something that could have happened to anyone </option>
+                                  <option value="Catastrophizing">Catastrophizing - Overemphasizing the chances of a disaster as a result of a situation</option>
+                                  <option value="Mind Reading">Mind Reading - Assuming we know what other people are thinking or feeling without actually knowing</option>
+                                  <option value="Fortune Telling">Fortune Telling - Believing we know specifically what the events of the future will be even though no one does</option>
+                              </select>
+
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-12">
+                              <textarea class="form-control" id="Textarea" rows="8" name="question5"
+                                  placeholder="Rewrite your story with less distorted thinking."></textarea>
+                          </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" id="Textarea" rows="8" name="question6"
+                                placeholder="How do you feel now and what did you learn"></textarea>
+                        </div>
+                    </div>
+                        <div class="regerv_btn">
+                            <button type="submit" class="btn_2">Save your Entry</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% include 'footer.html' %}
+
+{% endblock %}

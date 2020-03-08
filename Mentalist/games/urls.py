@@ -6,8 +6,10 @@ urlpatterns = [
     path('login', views.loginUser, name="login"),
     path('logout', views.logoutUser, name="logout"),
     path('signup', views.signupUser, name="signup"),
-    path('home', views.home, name="home"),
+    path('profile', views.profile, name="profile"),
     path('flappy', views.flappy, name="flappy"),
-    path('chat', views.chat, name="chat"),
+    path('write', views.write, name="write"),
+    path('mind', views.mind, name="mind"),
+    path('game', views.game, name="game"),
     path('api/save-score/<int:score>', views.SaveScore.as_view(), name="savescore"),
 ]

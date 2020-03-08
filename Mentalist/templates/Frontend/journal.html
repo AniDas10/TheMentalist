@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Mind Journal {% endblock %}
+{% block body %}
+{% include 'navbar.html' %}
+
+    <!-- breadcrumb start-->
+    <section class="breadcrumb_part breadcrumb_bg" style="margin-bottom: 2rem; margin-top: 6rem;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner">
+                        <div class="breadcrumb_iner_item">
+                            <h2 style="font-size: 4rem;">Mind Journal</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb start-->
+
+
+    <!--================Blog Area =================-->
+    <section class="blog_area section_padding" style="padding-top: 2rem !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                        {% for entry in entries %}
+                            <article class="blog_item z-depth-5 shadow">
+                                <div class="blog_item_img">
+                                    <!-- <img class="card-img rounded-0" src="{% static 'Frontend/img/blog/single_blog_1.png' %}" alt=""> -->
+                                    <a href="#" class="blog_item_date" style="background-color: #dc3545;">
+                                        <h3>{{entry.timestamp|date:"d"}}</h3>
+                                        <p>{{entry.timestamp|date:"M"}}</p>
+                                    </a>
+                                </div>
+
+                                <div class="blog_details">
+                                    <div class="d-inline-block">
+                                        <h2>{{entry.question1}}</h2>
+                                    </div>
+                                    <p>{{entry.question5}}</p>
+                                    <ul class="blog-info-link">
+                                        <li><a href="#"><i class="far fa-user"></i>{{entry.question4}}</a></li>
+                                    </ul>
+                                </div>
+                            </article>
+                        {% endfor %}
+
+                        <!-- <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a href="#" class="page-link" aria-label="Previous">
+                                        <i class="ti-angle-left"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link" aria-label="Next">
+                                        <i class="ti-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+    {% include 'footer.html' %}
+
+{% endblock %}

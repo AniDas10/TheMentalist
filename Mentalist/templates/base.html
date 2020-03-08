@@ -3,15 +3,37 @@
 <html lang="en">
 <head>
 	<title>{% block title %}{% endblock %}</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, ">
+	<meta charset="utf-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--===============================================================================================-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 <!--===============================================================================================-->
+ <!-- Required meta tags -->
+
+ <!-- <title>Mentalist</title> -->
+ <link rel="icon" href="img/favicon.png">
+ <!-- Bootstrap CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/bootstrap.min.css' %}">
+ <!-- animate CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/animate.css' %}">
+ <!-- owl carousel CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/owl.carousel.min.css' %}">
+ <!-- themify CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/themify-icons.css' %}">
+ <!-- flaticon CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/flaticon.css' %}">
+ <!-- magnific popup CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/manific-popup.css' %}">
+ <!-- nice select CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/nice-select.css' %}">
+ <!-- swiper CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/slick.css' %}">
+ <!-- style CSS -->
+ <link rel="stylesheet" href="{% static 'Frontend/css/style.css' %}">
     {% block extratop %}{% endblock %}
 </head>
 <body>
@@ -19,11 +41,29 @@
     {% block body %}{% endblock %}
 
 <!--===============================================================================================-->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
 <!--===============================================================================================-->
 	<script src="{% static 'js/main.js' %}"></script>
+	<!-- jquery plugins here-->
+
+    <script src="{% static 'Frontend/js/jquery-1.12.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="{% static 'Frontend/js/popper.min.js' %}"></script>
+    <!-- bootstrap js -->
+    <script src="{% static 'Frontend/js/bootstrap.min.js' %}"></script>
+    <!-- owl carousel js -->
+    <script src="{% static 'Frontend/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'Frontend/js/jquery.nice-select.min.js' %}"></script>
+    <!-- contact js -->
+    <script src="{% static 'Frontend/js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'Frontend/js/jquery.form.js' %}"></script>
+    <script src="{% static 'Frontend/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'Frontend/js/mail-script.js' %}"></script>
+    <script src="{% static 'Frontend/js/contact.js' %}"></script>
+    <!-- custom js -->
+    <script src="{% static 'Frontend/js/custom.js' %}"></script>
 	{% block extrajs %}{% endblock %}
 </body>
 </html>

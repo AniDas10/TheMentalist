@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(Session)
 admin.site.register(UserMetaData)
 admin.site.register(Game)
+admin.site.register(MindJournalEntry)
