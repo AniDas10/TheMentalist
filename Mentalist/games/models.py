@@ -19,3 +19,16 @@ class Game(models.Model):
     score = models.IntegerField()
     question = models.TextField()
     answer = models.TextField(null=True, default=None)
+    answered_time = models.DateTimeField(null=True, default=None)
+    question_time = models.DateTimeField(auto_now_add=True)
+
+class MindJournalEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    emotion = models.CharField(max_length=10)
+    question1 = models.TextField()
+    question2 = models.TextField()
+    question3 = models.TextField()
+    question4 = models.TextField()
+    question5 = models.TextField()
+    question6 = models.TextField()

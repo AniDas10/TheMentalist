@@ -25,11 +25,11 @@ pool = {
             "How are you feeling today?",
             "Have u ever consulted a psychologist before?"],
         2: [
-            "What do you feel like doing?",
-            "Do you feel like you need to depend on substances?",
-            "Are you under a lot of pressure?",
-            "How long can you work for at a time?",
-            "Do you have any motivation to do work?"]
+            "How active do you feel today?",
+            "How dependant are you on substances?",
+            "How much pressure are you under?",
+            "How many hours can you work at a time?",
+            "How motivated are you to do work?"]
 
     },
     "depression" : {

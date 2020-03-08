@@ -1226,7 +1226,7 @@ ul {
   left: 10px;
   display: block;
   color: #fff;
-  background-color: #0065e1;
+  background-color: #dc3545 !important;
   padding: 8px 15px;
   border-radius: 5px;
 }

@@ -1,6 +1,3 @@
-import paralleldots
-paralleldots.set_api_key("AWDCWos9GlVND0R3Pf8L6D3NDjRAKQzDDWsgdtW0Pbw")
-
 def process_emotions(emotions):
     total = {
         'Fear': 0,
@@ -22,12 +19,14 @@ def process_emotions(emotions):
     return max(total, key=lambda x: x[1])[0]
 
 def get_emotion(sentence):
+    import paralleldots
+    paralleldots.set_api_key("AWDCWos9GlVND0R3Pf8L6D3NDjRAKQzDDWsgdtW0Pbw")
     text = sentence.split('.')
     response = paralleldots.batch_emotion(text)
     return process_emotions(response['emotion'])
 
-if __name__ == '__main__':
-    text=["Choke me daddy"]
-    response=paralleldots.batch_emotion(text)
-    # print(response)
-    print(f'You are {process_emotions(response["emotion"])}')
+# if __name__ == '__main__':
+#     text=["Choke me daddy"]
+#     response=paralleldots.batch_emotion(text)
+#     # print(response)
+#     print(f'You are {process_emotions(response["emotion"])}')

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Profile {% endblock %}
+{% block body %}
+{% include 'navbar.html' %}
+<style>
+    .question, .answer {
+        border: 2px solid #dedede;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    .question {
+        background-color: #000;
+        border-color: #eee;
+    }
+
+    .question p {
+        color: #ddd;
+    }
+
+    .answer {
+        background-color: #f1f1f1;
+    }
+
+    .answer p {
+        color: #333;
+    }
+
+    .container::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .time {
+        float: right;
+        color: #aaa;
+    }
+
+    #chatbox {
+        border: 2px solid;
+        border-radius: 5px;
+    }
+
+    #new_question {
+        background-color: #681515;
+    }
+</style>
+
+<!-- feature_part start-->
+<section class="feature_part">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8">
+                <div class="section_tittle text-center">
+                    <h1>Session {{session.count}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-between align-items-center">
+            <div class="{% if not meta.disorder %}offset-lg-3{% endif %} col-lg-6 col-sm-12 pt-2 mt-2 pb-2" id="chatbox">
+                <h2>Your Questions</h2>
+                {% for game in games %}
+                <div class="question container">
+                    <b>Question</b>
+                    <p>{{game.question}}</p>
+                    <span class="time">{{game.question_time|date:"j M"}} {{game.question_time|time:"h:i A"}}</span>
+                </div>
+                <div class="answer container">
+                    <b>Answer</b>
+                    <p>{{game.answer}}</p>
+                    <span class="time">{{game.answered_time|date:"j M"}} {{game.answered_time|time:"h:i A"}}</span>
+                </div>
+                {% endfor %}
+                {% if last_game %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="question container" id="new_question">
+                        <b>New Question</b>
+                        <p>{{last_game.question}}</p>
+                        <span class="time">{{last_game.question_time|date:"j M"}} {{last_game.question_time|time:"h:i A"}}</span>
+                    </div>
+                    <input type="hidden" name="gid" value="{{last_game.id}}">
+                    <div class="input-group mb-2">
+                        {% if session.count == 1 %}
+                        <input type="text" class="form-control form-control-lg" placeholder="Your Answer" name="answer">
+                        {% else %}
+                        <select class="form-control" placeholder="Your Answer" name="answer">
+                            <option value="1">1 (Very Low)</option>
+                            <option value="2">2 (Low)</option>
+                            <option value="3">3 (Normal)</option>
+                            <option value="4">4 (High)</option>
+                            <option value="5">5 (Very High)</option>
+                        </select>
+                        {% endif %}
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="submit">Send</button>
+                        </div>
+                      </div>
+                    <!-- <input type="text" name="answer" class="form-control">
+                    <button type="submit" class="btn btn-primary">Submit</button> -->
+                </form>
+                {% else %}
+                <p class="text-center">No New Questions to answer at the moment<br>Click <a href="{% url 'game' %}">here</a> to go to the game</p>
+                {% endif %}
+            </div>
+
+            {% if meta.disorder %}
+            <div class="col-lg-6 col-sm-12 pt-2 mt-2 pb-2 pl-2 text-center">
+                <h2>We have detected that you might have {{meta.disorder}}</h2>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- feature_part start-->
+
+
+
+    {% include 'footer.html' %}
+
+{% endblock %}

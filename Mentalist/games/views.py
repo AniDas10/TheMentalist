@@ -10,18 +10,19 @@ from django.utils.html import escape
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from rest_framework import generics, status
-from Ani import report, classifyProblem
+from Ani import report, classifyProblem, get_emotion
 from .models import *
+import datetime
 
 
 def index(request):
-    return HttpResponse("Welcome!")
+    return render(request, 'Frontend/index.html')
 
 def signupUser(request):
     if request.method == 'POST':
         username = escape(request.POST['username'])
-        raw_password = escape(request.POST['password1'])
-        raw_password2 = escape(request.POST['password2'])
+        raw_password = escape(request.POST['password'])
+        raw_password2 = escape(request.POST['confirm_password'])
         try:
             if raw_password == raw_password2 and len(raw_password) >= 6:
                 user = User.objects.create(username=username, password=raw_password)
@@ -30,14 +31,14 @@ def signupUser(request):
                 login(request, user) # logs User in
                 session = Session.objects.create(user=user)
                 UserMetaData.objects.create(user=user, current_session=session)
-                return redirect('home')
+                return redirect('profile')
             elif len(raw_password) >= 6:
-                return render(request, 'Authentication/signup.html', {'error': "Passwords do not match!"})
+                return render(request, 'Frontend/register.html', {'error': "Passwords do not match!"})
             else:
-                return render(request, 'Authentication/signup.html', {'error': "Password must be 6 characters or more"})
+                return render(request, 'Frontend/register.html', {'error': "Password must be 6 characters or more"})
         except Exception as e:
-            return render(request, 'Authentication/signup.html', {'error': str(e)})
-    return render(request, 'Authentication/signup.html', {'error': None})
+            return render(request, 'Frontend/register.html', {'error': str(e)})
+    return render(request, 'Frontend/register.html', {'error': None})
 
 def loginUser(request):
     if request.method == 'POST':
@@ -46,31 +47,24 @@ def loginUser(request):
         user = authenticate(username=username, password=raw_password)
         if user is not None:
             login(request, user) # logs User in
-            return redirect('home')
+            return redirect('profile')
         else:
-            return render(request, 'Authentication/signup.html', {'error': "Unable to Log you in!"})
-    return render(request, 'Authentication/login.html', {'error': None})
+            return render(request, 'Frontend/login.html', {'error': "Unable to Log you in!"})
+    return render(request, 'Frontend/login.html', {'error':''})
 
 def logoutUser(request):
     logout(request)
     return redirect('index')
 
 @login_required
-def home(request):
-    return HttpResponse("your dashboard")
-
-@login_required
-def flappy(request):
-    return render(request, 'flappy.html')
-
-@login_required
-def chat(request):
+def profile(request):
     user = request.user
     meta = UserMetaData.objects.get(user=user)
     if request.method == 'POST':
         ans = request.POST['answer']
         game = Game.objects.get(id=request.POST['gid'])
         game.answer = ans
+        game.answered_time = datetime.datetime.now()
         game.save()
         q_no = Game.objects.filter(session=meta.current_session).count()
         if meta.current_session.count < 3:
@@ -83,23 +77,53 @@ def chat(request):
                 meta.current_session = new_session
             elif meta.current_session.count == 2:
                 games = Game.objects.filter(session=meta.current_session)
-                meta.disorder = classifyProblem.classify(games.values_list('answer', flat=True))
+                meta.disorder = classifyProblem.classify([int(v) for v in games.values_list('answer', flat=True)])
                 meta.save()
                 new_session = Session.objects.create(user=user, count=3)
                 meta.current_session = new_session
             else:
                 curr = meta.current_session
-                curr.result, curr.result_percent = report.analysis_per_session()
+                games = Game.objects.filter(session=curr)
+                curr.result, curr.result_percent = report.analysis_per_session([int(v) for v in games.values_list('answer', flat=True)])
                 curr.save()
                 new_session = Session.objects.create(user=user, count=curr.count+1)
                 meta.current_session = new_session
             meta.save()
-    games = Game.objects.filter(session__user=request.user).exclude(answer__isnull=True)
+    games = Game.objects.filter(session=meta.current_session).exclude(answer__isnull=True)
     try:
-        last_game = Game.objects.get(session=meta.current_session, answer=None)
-        return render(request, 'chat.html', {'new_question': last_game.question, 'gid': last_game.id, 'games': games})
+        last_game = Game.objects.filter(session=meta.current_session, answer=None).first()
+        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session})
     except Exception:
-        return render(request, 'chat.html', {'games': games})
+        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session})
+
+@login_required
+def flappy(request):
+    return render(request, 'flappy.html')
+
+@login_required
+def write(request):
+    if request.method == 'POST':
+        entry = MindJournalEntry()
+        entry.user = request.user
+        entry.question1 = escape(request.POST['question1'])
+        entry.question2 = escape(request.POST['question2'])
+        entry.question3 = escape(request.POST['question3'])
+        entry.question4 = escape(request.POST['question4'])
+        entry.question5 = escape(request.POST['question5'])
+        entry.question6 = escape(request.POST['question6'])
+        entry.emotion = get_emotion.get_emotion(entry.question1+'.'+entry.question2+'.'+entry.question3+'.'+entry.question4+'.'+entry.question5+'.'+entry.question6)
+        entry.save()
+        return redirect('mind')
+    return render(request, 'Frontend/write.html', {'error':''})
+
+@login_required
+def mind(request):
+    entries = MindJournalEntry.objects.filter(user=request.user).order_by('timestamp')
+    return render(request, 'Frontend/journal.html', {'entries': entries})
+
+@login_required
+def game(request):
+    return render(request, 'Frontend/game.html')
 
 
 class SaveScore(generics.GenericAPIView):

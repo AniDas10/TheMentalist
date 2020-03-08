@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Register {% endblock %}
+{% block body %}
+{% include 'navbar.html' %}
+
+    <!--::regervation_part start::-->
+    <section class="regervation_part section_padding" style="margin-top: 6rem;">
+        <div class="container">
+            <div class="row align-items-center regervation_content">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="regervation_part_iner">
+                        <form method="POST" action="{% url 'signup' %}">
+                            {% csrf_token %}
+                            <h2>Register <span>{% if error %} {{error}} {% else %}  {% endif %}</span></h2>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="username" class="form-control" id="inputEmail4" placeholder="Username" name="username">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="password" class="form-control" id="inputPassword4"
+                                        placeholder="Password" name="password">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="password" class="form-control" id="inputPassword4"
+                                        placeholder="Confirm Password" name="confirm_password">
+                                </div>
+                            </div>
+                            <div class="regerv_btn">
+                                <button type="submit" class="btn_2">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
+
+{% endblock %}
