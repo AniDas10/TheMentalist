@@ -9,6 +9,7 @@ import wolframalpha     #API for executing 90% queries
 import os
 import sys
 import random
+from textblob import TextBlob
 
 #pyttsx3 is the speak engine used by windows
 engine = pyttsx3.init('sapi5')
@@ -56,7 +57,7 @@ def response(q):
 
     if 'low' in query or 'down' in query or 'sad' in query or 'suicide' in query or 'depressed' in query or 'bad' in query:
         res.append(random.choice(response_1))
-    elif 'better' in query or 'feel better' in query:
+    elif 'better' in query or 'feel better' in query or 'happy' in query or 'cheerful' in query or 'happier' in query or 'good' in query:
         res.append(random.choice(response_2))
 
     elif 'what\'s up' in query or 'how are you' in query or 'what are you doing' in query:
@@ -85,10 +86,15 @@ def response(q):
 
                 res.append(results)
             except:
-                results = wikipedia.summary(query, sentences=2)
-                res.append('This might be what you needed')
+                # results = wikipedia.summary(query, sentences=2)
+                # res.append('This might be what you needed')
                 #speak('Tony thinks what u r looking for is')
-                res.append(results)
+                blob = TextBlob(text)
+                ana = blob.sentiment.polarity
+                if ana > 0:
+                    res.append(random.choice(response_2))
+                else:
+                    res.append(random.choice(response_1))
         except:
             res.append("Sorry I am not an expert")
             res.append("But there are surely some experts you can consult out there")

@@ -10,7 +10,7 @@ from django.utils.html import escape
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from rest_framework import generics, status
-from Ani import report, classifyProblem, get_emotion, Jarvis
+from Ani import report, classifyProblem, get_emotion, Jarvis, get_doctors
 from .models import *
 import datetime
 
@@ -60,6 +60,17 @@ def logoutUser(request):
 def profile(request):
     user = request.user
     meta = UserMetaData.objects.get(user=user)
+    loc = "VileParle"
+    doctors = Doctor.objects.filter(location=loc)
+    if not len(doctors):
+        docs = get_doctors.get_doctors(loc)
+        for doc in docs:
+            Doctor.objects.create(name=doc['Name'], phone=doc['Phone'], location=loc, experience=doc['Experience'], fee=doc['Consultation_fee'])
+        doctors = Doctor.objects.filter(location=loc)
+
+    if len(doctors) > 8:
+        doctors = doctors[:8]
+
     if request.method == 'POST':
         ans = request.POST['answer']
         game = Game.objects.get(id=request.POST['gid'])
@@ -102,9 +113,9 @@ def profile(request):
         result_percentages.append(0.0)
     try:
         last_game = Game.objects.filter(session=meta.current_session, answer=None).first()
-        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates})
+        return render(request, 'Frontend/profile.html', {'last_game': last_game, 'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors})
     except Exception:
-        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates})
+        return render(request, 'Frontend/profile.html', {'games': games, 'meta': meta, 'session': meta.current_session, 'result_percentages': result_percentages, 'growth_sessions': growth_sessions, 'growth_rates': growth_rates, 'doctors': doctors})
 
 @login_required
 def flappy(request):
